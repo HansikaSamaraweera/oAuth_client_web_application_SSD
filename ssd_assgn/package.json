@@ -1,0 +1,27 @@
+{
+  "name": "ssd_assgn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "googleapis": "^85.0.0",
+    "multer": "^1.4.3",
+    "nodeman": "^1.1.2",
+    "nodemon": "^2.0.12",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0"
+  },
+  "devDependencies": {
+    "express-session": "^1.17.2",
+    "google-drive-getfilelist": "^1.0.5"
+  }
+}
