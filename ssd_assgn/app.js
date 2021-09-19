@@ -11,18 +11,21 @@ const app = express();
 
 const passport = require('passport')
 const session = require('express-session')
-const facebookstratergy  = require('passport-facebook')
+const FacebookStrategy  = require('passport-facebook').Strategy;
 
 const CLIENT_ID = OAuth2Data.web.client_id;
 const CLIENT_SECRET = OAuth2Data.web.client_secret;
 const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
-
+const CLIENT_ID_FB =0 ;
+const CLIENT_SECRET_FB =0  ;
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
     CLIENT_SECRET,
-    REDIRECT_URL
+    REDIRECT_URL,
 );
+
 var authed = false;
+
 
 const SCOPES =
     "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile ";
@@ -175,6 +178,23 @@ app.get("/google/callback", function (req, res) {
         });
     }
 });
+
+//facebook
+passport.use(new FacebookStrategy({
+        clientID: process.env.CLIENT_ID_FB,
+        clientSecret: process.env.CLIENT_SECRET_FB,
+        callbackURL: "http://www.example.com/auth/facebook/SSDwebapp"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        User.findOrCreate({facebookId: profile.id}, function(err, user) {
+            if (err) { return done(err); }
+            done(null, user);
+        });
+    }
+));
+
+
+
 
 app.listen(5000, () => {
     console.log("App is listening on Port 5000");
