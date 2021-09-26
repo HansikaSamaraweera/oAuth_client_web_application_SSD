@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "googleapis": "^85.0.0",
@@ -18,7 +19,9 @@
     "nodeman": "^1.1.2",
     "nodemon": "^2.0.12",
     "passport": "^0.4.1",
-    "passport-facebook": "^3.0.0"
+    "passport-facebook": "^3.0.0",
+    "passport-github": "^1.1.0",
+    "query-string": "^7.0.1"
   },
   "devDependencies": {
     "express-session": "^1.17.2",

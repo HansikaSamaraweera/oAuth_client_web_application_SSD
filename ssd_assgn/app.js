@@ -7,6 +7,9 @@ var name,pic
 
 const { google } = require("googleapis");
 
+const GitHubStrategy = require('passport-github').Strategy;
+
+
 const app = express();
 
 const passport = require('passport')
@@ -16,8 +19,11 @@ const FacebookStrategy  = require('passport-facebook').Strategy;
 const CLIENT_ID = OAuth2Data.web.client_id;
 const CLIENT_SECRET = OAuth2Data.web.client_secret;
 const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
+
 const CLIENT_ID_FB =0 ;
 const CLIENT_SECRET_FB =0  ;
+const d = require('dotenv').config();
+
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
     CLIENT_SECRET,
@@ -29,15 +35,6 @@ var authed = false;
 
 const SCOPES =
     "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile ";
-
-/*const SCOPES = [
-    'https://www.googleapis.com/auth/drive',
-    'https://www.googleapis.com/auth/drive.file',
-    'https://www.googleapis.com/auth/drive.readonly',
-    'https://www.googleapis.com/auth/drive.metadata.readonly',
-    'https://www.googleapis.com/auth/drive.metadata',
-    'https://www.googleapis.com/auth/drive.photos.readonly'
-];*/
 
 
 app.set("view engine", "ejs");
@@ -179,23 +176,37 @@ app.get("/google/callback", function (req, res) {
     }
 });
 
-//facebook
-passport.use(new FacebookStrategy({
-        clientID: process.env.CLIENT_ID_FB,
-        clientSecret: process.env.CLIENT_SECRET_FB,
-        callbackURL: "http://www.example.com/auth/facebook/SSDwebapp"
+//github
+
+passport.use(new GitHubStrategy({
+        clientID: 'd8d5fa6fa3be09b403b1',
+        clientSecret: '9c864090cfe903e734c9e9131577eee164d55cc3',
+        callbackURL: "http://127.0.0.1:5000/auth/github/callback"
     },
-    function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({facebookId: profile.id}, function(err, user) {
-            if (err) { return done(err); }
-            done(null, user);
-        });
+    function(accessToken, refreshToken, profile, cb) {
+        console.log(accessToken);
+        console.log(refreshToken);
+        console.log(profile.username)
+        console.log(profile)
+        console.log(cb)
+
+        return(profile.username);
+
     }
 ));
 
+app.get('/auth/github',
+    passport.authenticate('github'));
 
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/login' }),
+    function(req, res) {
+        res.redirect('/');
+    });
 
 
 app.listen(5000, () => {
     console.log("App is listening on Port 5000");
 });
+
+
