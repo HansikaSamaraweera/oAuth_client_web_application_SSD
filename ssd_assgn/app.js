@@ -7,12 +7,19 @@ let name, pic;
 //Google configurations
 const { google } = require("googleapis");
 
+//Github Configurations Using Node Passport
 const GitHubStrategy = require('passport-github').Strategy;
 const passport = require('passport');
 const session = require('express-session');
 
 const app = express();
 
+/*Google Login, using oAuth Add files to drive, View files
+*
+*
+*
+* */
+//Google client data
 const CLIENT_ID = OAuth2Data.web.client_id;
 const CLIENT_SECRET = OAuth2Data.web.client_secret;
 const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
@@ -167,7 +174,11 @@ app.get("/google/callback", function (req, res) {
         });
     }
 });
-
+/*Github Login and Sessions using Passport and session in node libraries
+*
+*
+*
+* */
 
 //Github
 
