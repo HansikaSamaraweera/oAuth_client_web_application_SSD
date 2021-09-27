@@ -2,36 +2,27 @@ const fs = require("fs");
 const express = require("express");
 const multer = require("multer");
 const OAuth2Data = require("./credentials.json");
-const getfilelist = require("google-drive-getfilelist");
-var name,pic
+let name, pic;
 
+//Google configurations
 const { google } = require("googleapis");
 
 const GitHubStrategy = require('passport-github').Strategy;
-
+const passport = require('passport');
+const session = require('express-session');
 
 const app = express();
-
-const passport = require('passport')
-const session = require('express-session')
-const FacebookStrategy  = require('passport-facebook').Strategy;
 
 const CLIENT_ID = OAuth2Data.web.client_id;
 const CLIENT_SECRET = OAuth2Data.web.client_secret;
 const REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
-
-const CLIENT_ID_FB =0 ;
-const CLIENT_SECRET_FB =0  ;
-const d = require('dotenv').config();
 
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
     CLIENT_SECRET,
     REDIRECT_URL,
 );
-
-var authed = false;
-
+let authed = false;
 
 const SCOPES =
     "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile ";
@@ -39,6 +30,7 @@ const SCOPES =
 
 app.set("view engine", "ejs");
 
+//Google
 var Storage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, "./images");
@@ -150,7 +142,7 @@ app.post("/upload", (req, res) => {
     });
 });
 
-app.get('/logout',(req,res) => {
+app.get('/logout1',(req,res) => {
     authed = false
     res.redirect('/')
 })
@@ -176,33 +168,89 @@ app.get("/google/callback", function (req, res) {
     }
 });
 
-//github
 
-passport.use(new GitHubStrategy({
-        clientID: 'd8d5fa6fa3be09b403b1',
-        clientSecret: '9c864090cfe903e734c9e9131577eee164d55cc3',
-        callbackURL: "http://127.0.0.1:5000/auth/github/callback"
-    },
-    function(accessToken, refreshToken, profile, cb) {
-        console.log(accessToken);
-        console.log(refreshToken);
-        console.log(profile.username)
-        console.log(profile)
-        console.log(cb)
+//Github
 
-        return(profile.username);
+app.use(
+    session({
+        secret: 'hello world',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+            maxAge: 7 * 24 * 60 * 60 * 1000,//7 days session
+        },
+    })
+);
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, cb) {
+    cb(null, user.id);
+});
+
+passport.deserializeUser(function (id, cb) {
+    cb(null, id);
+});
+
+passport.use(
+    new GitHubStrategy(
+        {
+            clientID: 'd8d5fa6fa3be09b403b1',
+            clientSecret: '9c864090cfe903e734c9e9131577eee164d55cc3',
+            callbackURL: 'http://127.0.0.1:5000/auth/github/callback',
+        },
+        function (accessToken, refreshToken, profile, cb) {
+            console.log(profile)
+            name=profile.username;
+            pic=profile.photos[0].value
+            console.log('checking')
+            console.log(profile.photos[0].value)
+            cb(null, profile);
+        }
+    )
+);
+
+const isAuth = (req, res, next) => {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/login');
     }
-));
+};
 
-app.get('/auth/github',
-    passport.authenticate('github'));
+app.get('/dashboard', isAuth, (req, res) => {
+    console.log(req)
+    //res.sendFile(__dirname + '/dashboard.html');
+    res.render("dashboard",{name:name,pic:pic,success:true})
+});
 
-app.get('/auth/github/callback',
+app.get('/login', (req, res) => {
+    if (req.user) {
+        return res.redirect('/dashboard');
+    }
+    res.sendFile(__dirname + '/login.html');
+});
+
+app.get('/logout2', (req, res) => {
+    req.logOut();
+    res.redirect('/login');
+});
+
+//auth
+app.get('/auth/github', passport.authenticate('github'));
+
+app.get(
+    '/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/login' }),
-    function(req, res) {
-        res.redirect('/');
-    });
+    function (req, res) {
+        // Successful authentication, redirect home.
+        res.redirect('/dashboard');
+    }
+);
+
 
 
 app.listen(5000, () => {

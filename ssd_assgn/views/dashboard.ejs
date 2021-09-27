@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Node Authentication</title>
+    <title>Dashboard Github</title>
     <link
       rel="stylesheet"
       href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"
@@ -20,37 +20,27 @@
   <body>
     <div class="container">
       <div class="page-header text-center">
-        <h1>Files Display Page</h1>
+        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
         <a href="/logout1" class="btn btn-default btn-sm">Logout</a>
       </div>
 
       <div class="row">
-        <!-- GOOGLE INFORMATION -->
-        <div>
+
+        <div class="col-sm-6">
           <div class="well">
             <h3 class="text-danger">
-              Files
+              <span class="fa fa-github"></span> Github
             </h3>
 
-            <table>
-            <% for(var i=0; i < data.length; i++) { %>
-               <tr>
-               <p> File URL : <%= data[i] %> </p>
-
-               <a href=<%= data[i] %>>
-                   Click Here to view and Download.
-               </a>
-
-                <br/><br/>
-               </tr>
-            <% } %>
-            </table>
-
-
+            <p>
+              <strong>name</strong>: <%= name %>
+              <br />
+              <strong>pic:</strong>:
+              <img src="<%=pic%>" width="200" height="200" alt="" />
+            </p>
           </div>
         </div>
 
-          </div>
         </div>
       </div>
     </div>
