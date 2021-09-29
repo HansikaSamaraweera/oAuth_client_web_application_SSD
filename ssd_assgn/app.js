@@ -51,7 +51,7 @@ var upload = multer({
     storage: Storage,
 }).single("file"); //Field name and max count
 
-app.get("/", (req, res) => {
+app.get("/google", (req, res) => {
     if (!authed) {
         // Generate an OAuth URL and redirect there
         var url = oAuth2Client.generateAuthUrl({
@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
             scope: SCOPES,
         });
         console.log(url);
-        res.render("index", { url: url });
+        res.render("index_google", { url: url });
     } else {
         var oauth2 = google.oauth2({
             auth: oAuth2Client,
@@ -72,7 +72,7 @@ app.get("/", (req, res) => {
                 console.log(response.data);
                 name = response.data.name
                 pic = response.data.picture
-                res.render("success", {
+                res.render("success.ejs", {
                     name: response.data.name,
                     pic: response.data.picture,
                     success:false
@@ -81,6 +81,11 @@ app.get("/", (req, res) => {
         });
     }
 });
+
+app.get('/',(req,res)=>{
+
+    res.render("index.ejs");
+})
 
 app.get('/files', (req,res )=>{
 
@@ -169,7 +174,7 @@ app.get("/google/callback", function (req, res) {
 
 
                 authed = true;
-                res.redirect("/");
+                res.redirect("/google");
             }
         });
     }
@@ -242,7 +247,8 @@ app.get('/login', (req, res) => {
     if (req.user) {
         return res.redirect('/dashboard');
     }
-    res.sendFile(__dirname + '/login.html');
+    //res.sendFile(__dirname + '/login.html');
+    res.render("index.ejs");
 });
 
 app.get('/logout2', (req, res) => {
