@@ -2,7 +2,7 @@ const fs = require("fs");
 const express = require("express");
 const multer = require("multer");
 const OAuth2Data = require("./credentials.json");
-let name, pic;
+let name, pic, githubname;
 
 //Google configurations
 const { google } = require("googleapis");
@@ -77,7 +77,8 @@ app.get("/google", (req, res) => {
                 res.render("success.ejs", {
                     name: response.data.name,
                     pic: response.data.picture,
-                    success:false
+                    success:false,
+                    det:githubname
                 });
             }
         });
@@ -147,7 +148,7 @@ app.post("/upload", (req, res) => {
                         console.error(err);
                     } else {
                         fs.unlinkSync(req.file.path)
-                        res.render("success",{name:name,pic:pic,success:true})
+                        res.render("success",{name:name,pic:pic,success:true,det:githubname})
                     }
 
                 }
@@ -223,7 +224,8 @@ passport.use(
         function (accessToken, refreshToken, profile, cb) {
             console.log(profile)
             name=profile.username;
-            pic=profile.photos[0].value
+            pic=profile.photos[0].value;
+            githubname=profile.username
             console.log('checking')
             console.log(profile.photos[0].value)
             cb(null, profile);
