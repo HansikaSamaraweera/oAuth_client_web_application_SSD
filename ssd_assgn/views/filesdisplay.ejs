@@ -13,39 +13,42 @@
       border: 1px solid #808080;
     }
   </style>
-</head>
-<body>
-<div class="container">
-  <br/>
-  <div class="text-right">
-    <p><button><a href="/logout1"><span class="glyphicon glyphicon-log-out"></span> Logout</a></button></p>
-  </div>
-  <div class="alert alert-danger text-center" role="alert">
-    <h1 class="alert-heading">Files Display Page</h1>
-    <hr>
-  </div>
+  </head>
+  <body>
+        <div class="container">
+        <br/>
+            <div class="text-right">
+                <p><button><a href="/logout1"><span class="glyphicon glyphicon-log-out"></span> Logout</a></button></p>
+            </div>
 
-  <div class="row">
-      <div class="well">
-        <table>
-          <% for(var i=0; i < data.length; i++) { %>
-            <tr>
-              <p style="color: #008080; font-weight: bold;"> File URL : <%= data[i] %> </p>
-              <a href=<%= data[i] %>>
-                Click Here to view and Download.
-              </a>
-              <br/><br/>
-              <hr class="new4"/>
-            </tr>
-          <% } %>
-        </table>
+            <!-- Heading-->
+            <div class="alert alert-danger text-center" role="alert">
+                <h1 class="alert-heading">Files Display Page</h1>
+                <hr>
+            </div>
+
+            <!-- All File List-->
+            <div class="row">
+                <div class="well">
+                    <table>
+                       <% for(var i=0; i < data.length; i++) { %>
+                       <tr>
+                            <p style="color: #008080; font-weight: bold;"> File URL : <%= data[i] %> </p>
+                            <a href=<%= data[i] %>>
+                                Click Here to view and Download.
+                            </a>
+                            <br/><br/>
+                            <hr class="new4"/>
+                       </tr>
+                       <% } %>
+                    </table>
+                </div>
+            </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
-</body>
+     </div>
+   </div>
+ </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </html>
