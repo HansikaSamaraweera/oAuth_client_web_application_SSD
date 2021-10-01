@@ -11,84 +11,228 @@
       href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"
     />
     <style>
-      body {
-        padding-top: 80px;
-        word-wrap: break-word;
-      }
+        body,
+        html {
+          /* you can add overflow:hidden here to make the scrollbar disappear */
+
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            background-image: url(https://images6.alphacoders.com/377/377152.jpg);
+        }
+
+        .profile-body{
+        margin: 25px;
+        }
+
+        .profile {
+        margin-top: -45px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 25px;
+        background-color: #ddd;
+        padding: 20px;
+        z-index: 0;
+        }
+
+        .socialmedia {
+            text-align: center;
+        }
+
+        .photo {
+            margin: 25px;
+
+        }
+
+        .image--cover {
+            width: 170px;
+            height: 170px;
+            border: #fff 3px solid;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: auto;
+            margin-top: -40px;
+        }
+
+        .username,
+        .profession,
+        .locationname,
+        .descricao {
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            padding: 0;
+            margin: 1px;
+        }
+
+        .username {
+            color: 	#ff4500;
+            font-size: 16pt;
+            margin: 2px;
+        }
+
+        .profession {
+            font-size: 14pt;
+        }
+
+        .locationname {
+            font-size: 14pt;
+            margin: 2px
+        }
+
+        .descricao {
+            border-top: #969696 solid 1px;
+            padding: 10px;
+            font-size: 11pt;
+            margin: 5px;
+        }
+
+        .button-facebook,
+        .button-instagram,
+        .button-twitter,
+        .button-whatsapp {
+            padding: 5px;
+            font-size: 18pt;
+        }
+        .button-facebook {
+            color: #3C5A99;
+        }
+        .button-instagram {
+          color: #893dc2;
+        }
+        .button-twitter {
+            color: #1DA1F2;
+        }
+        .button-whatsapp {
+            color: #4AC959;
+        }
+
+        #rating-stars {
+            margin: 4px;
+        }
+
+        #rating-stars .stars {
+            display: inline-flex;
+          }
+          #rarate-input {
+            pointer-events: none;
+          }
+          #rating-stars .rate-input {
+            position: absolute;
+            left: -9999px;
+          }
+          #rating-stars label {
+            cursor: pointer;
+            padding: 1px;
+            font-size: 20pt;
+          }
+          #rating-stars .star-icon {
+            color: orange;
+          }
+
+          #rating-stars .rate-input:checked ~ .star-label .star-icon {
+            color: #999;
+          }
+          #rating-stars .stars:hover .star-label .star-icon {
+            color: orange;
+          }
+          #rating-stars .rate-input:hover ~ .star-label .star-icon {
+            color: #999;
+          }
+
+          .div-center {
+            width: 900px;
+            height: 300px;
+            background-color: #fff;
+            margin: auto;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            padding: 1em 2em;
+            border-bottom: 2px solid #ccc;
+            display: table;
+          }
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout1" class="btn btn-default btn-sm">Logout</a>
-      </div>
+    <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+            integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    </head>
 
-      <div class="row">
-        <!-- GOOGLE INFORMATION -->
-        <div class="col-sm-6">
-          <div class="well">
-            <h3 class="text-danger">
-              <span class="fa fa-google-plus"></span> Google
-            </h3>
-
-            <p>
-              <strong>name</strong>: <%= name %>
-              <br />
-              <strong>pic:</strong>:
-              <img src="<%=pic%>" width="200" height="200" alt="" />
-            </p>
-          </div>
-        </div>
-
-        <div class="col-sm-6">
-          <div class="well">
-            <h3 class="text-danger">
-              <span class="fa fa-google-plus"></span> Upload File to Google
-              Drive
-            </h3>
-
-            <% if (success) { %>
-            <div class="alert alert-success alert-dismissible">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close"
-                >×</a
-              >
-              <strong>Success!</strong> Your Image File is Uploaded.
+    <body>
+        <br/>
+        <br/>
+        <div class="profile-body">
+            <div class="photo">
+                <img src="<%=pic%>"
+                    class="image--cover">
             </div>
-            <%}%>
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-              <div class="form-group">
-                <input
-                  type="file"
-                  class="form-control"
-                  name="file"
-                  required
-                  id=""
-                />
-              </div>
-              <div class="form-group">
-                <button class="btn btn-block btn-danger">
-                  Upload File
-                </button>
-              </div>
-            </form>
+            <div class="profile">
+                <div id="rating-stars" align="center">
+                    <div class="socialmedia">
+                                        <a href="#" class="button-facebook"><i class="fab fa-facebook-square"></i></a>
+                                        <a href="#" class="button-instagram"><i class="fab fa-instagram"></i></a>
+                                        <a href="#" class="button-twitter"><i class="fab fa-twitter-square"></i></a>
+                                        <a href="#" class="button-whatsapp"><i class="fab fa-whatsapp-square"></i></a>
+                    </div>
+                </div>
 
-            <form action="/files" method="GET">
+                <h4 class="username"><%= name %></h4>
 
-                  <div class="form-group">
-                    <button class="btn btn-block btn-danger">
-                      Go to display files page
-                    </button>
-                  </div>
-                </form>
+                <br/>
+                <br/>
+                <!--- File Upload ---->
+                 <div class="back">
+                   <div class="div-center">
+                     <div class="content">
+                       <h3 style="color: #8b4513; font-weight: bold;">
+                            Upload File to Google Drive
+                       </h3>
+                       <hr />
+                       <% if (success) { %>
+                           <div class="alert alert-success alert-dismissible">
+                               <a href="#" class="close" data-dismiss="alert" aria-label="close"
+                                       >×</a
+                                     >
+                                     <strong>Success!</strong> Your Image File is Uploaded.
+                                   </div>
+                       <%}%>
+                       <form action="/upload" method="POST" enctype="multipart/form-data">
+                         <div class="form-group">
+                           <label style="font-size:14px;">Select File To Upload </label>
+                           <input
+                                             type="file"
+                                             class="form-control"
+                                             name="file"
+                                             required
+                                             id=""
+                                           >
+                         </div>
+                         <button type="submit" class="btn btn-primary btn-lg">Upload File</button>
+                         <br/>
+                         <hr/>
+                         <br/>
+                         <h3 style="color: #8b4513; font-weight: bold;">
+                             View All Files
+                         </h3>
+                       </form>
+                       <form action="/files" method="GET">
+                             <button class="btn btn-success btn-lg">
+                                 Go to display files page
+                             </button>
+                       </form>
+                     </div>
+                     </span>
+                   </div>
+            </div>
 
-
-
-
-          </div>
-        </div>
-      </div>
-    </div>
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
