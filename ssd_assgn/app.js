@@ -51,9 +51,11 @@ var upload = multer({
     storage: Storage,
 }).single("file"); //Field name and max count
 
+
+//google login
 app.get("/google", (req, res) => {
     if (!authed) {
-        // Generate an OAuth URL and redirect there
+
         var url = oAuth2Client.generateAuthUrl({
             access_type: "offline",
             scope: SCOPES,
