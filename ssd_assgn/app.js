@@ -92,7 +92,7 @@ app.get('/',(req,res)=>{
 app.get('/files', (req,res )=>{
 
     let x=[];
-    const drive = google.drive({ version: "v3",auth:oAuth2Client  });
+    drive.files();
 
     drive.files.list({}, (err, res1) => {
         if (err) throw err;
