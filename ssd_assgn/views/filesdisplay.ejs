@@ -1,60 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Node Authentication</title>
-    <link
-      rel="stylesheet"
-      href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"
-    />
-    <style>
-      body {
-        padding-top: 80px;
-        word-wrap: break-word;
-      }
-    </style>
-  </head>
-  <body>
+<head>
+  <title>Files Display Page</title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/>
+  <style>
+    body {
+      padding-top: 0px;
+      word-wrap: break-word;
+    }
+    hr.new4 {
+      border: 1px solid #808080;
+    }
+  </style>
+</head>
+<body>
     <div class="container">
-      <div class="page-header text-center">
-        <h1>Files Display Page</h1>
-        <a href="/logout1" class="btn btn-default btn-sm">Logout</a>
-      </div>
+    <br/>
+        <div class="text-right">
+            <p><button><a href="/logout1"><span class="glyphicon glyphicon-log-out"></span> Logout</a></button></p>
 
-      <div class="row">
-        <!-- GOOGLE INFORMATION -->
-        <div>
-          <div class="well">
-            <h3 class="text-danger">
-              Files
-            </h3>
-
-            <table>
-            <% for(var i=0; i < data.length; i++) { %>
-               <tr>
-               <p> File URL : <%= data[i] %> </p>
-
-               <a href=<%= data[i] %>>
-                   Click Here to view and Download.
-               </a>
-
-                <br/><br/>
-               </tr>
-            <% } %>
-            </table>
-
-
-          </div>
+        <!-- Heading -->
         </div>
+            <div class="alert alert-danger text-center" role="alert">
+                <h1 class="alert-heading">Files Display Page</h1>
+                <hr>
+            </div>
 
-          </div>
+                <!-- Files Details-->
+                <div class="row">
+                    <div class="well">
+                        <table>
+                            <% for(var i=0; i < data.length; i++) { %>
+                            <tr>
+                                <p style="color: #008080; font-weight: bold;"> File URL : <%= data[i] %> </p>
+                                <a href=<%= data[i] %>>
+                                    Click Here to view and Download
+                                </a>
+                                <br/>
+                                <hr class="new4"/>
+                            </tr>
+                            <% } %>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+       </div>
     </div>
-  </body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </html>
