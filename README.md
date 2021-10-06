@@ -2,7 +2,6 @@
 # GitHub Google Authenticated File Uploading Application: Developer Point
 Submitted Date: 10/3/2021
 
-
 #Application Deployment for Testing.
 
 Requirement Environment : Node version 14
